@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Expenses · FinSight{% endblock %}
+{% block content %}
+<div class="container wide">
+    <div class="card">
+        <div class="top-actions">
+            <h1>Expenses</h1>
+            <a class="btn" href="{{ url_for('expenses.add_expense') }}">+ Add Expense</a>
+        </div>
+
+        <form method="GET" class="filter-row">
+            <div class="field">
+                <label for="month">Month</label>
+                <select name="month" id="month">
+                    {% for m in range(1, 13) %}
+                    <option value="{{ m }}" {{ "selected" if m == month }}>{{ m }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="field">
+                <label for="year">Year</label>
+                <input type="number" name="year" id="year" value="{{ year }}">
+            </div>
+            <div class="field">
+                <label for="category_id">Category</label>
+                <select name="category_id" id="category_id">
+                    <option value="">All</option>
+                    {% for c in categories %}
+                    <option value="{{ c.id }}" {{ "selected" if c.id == selected_category_id }}>{{ c.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit">Filter</button>
+        </form>
+
+        <p style="font-size:0.9rem; color:#33473c;">
+            Total for period: <strong>{{ current_user.currency }} {{ "%.2f"|format(total) }}</strong>
+        </p>
+
+        <table>
+            <thead>
+                <tr><th>Date</th><th>Category</th><th>Amount</th><th>Payment</th><th>Note</th><th></th></tr>
+            </thead>
+            <tbody>
+                {% for e in expenses %}
+                <tr>
+                    <td>{{ e.expense_date.strftime("%d %b %Y") }}</td>
+                    <td>{{ e.category.name }}</td>
+                    <td>{{ current_user.currency }} {{ "%.2f"|format(e.amount) }}</td>
+                    <td>{{ e.payment_method }}</td>
+                    <td>{{ e.note or "—" }}</td>
+                    <td class="row-actions">
+                        <a class="btn btn-secondary" href="{{ url_for('expenses.edit_expense', expense_id=e.id) }}">Edit</a>
+                        <form class="inline-form" method="POST" action="{{ url_for('expenses.delete_expense', expense_id=e.id) }}"
+                              onsubmit="return confirm('Delete this expense?');">
+                            <button type="submit" class="btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr><td colspan="6" class="empty-state">No expenses logged for this period yet.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Alerts & Notifications{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2>🔔 Alerts & Notifications</h2>
+            <p class="text-muted">
+                Stay updated about your financial activities.
+            </p>
+        </div>
+
+        <a href="{{ url_for('main.dashboard') }}"
+           class="btn btn-primary">
+            Back to Dashboard
+        </a>
+    </div>
+
+    {% if alerts %}
+
+        {% for alert in alerts %}
+
+        <div class="alert alert-{{ alert.type }} shadow-sm mb-3"
+             role="alert">
+
+            <div class="d-flex align-items-start">
+
+                <div class="me-3 fs-4">
+
+                    {% if alert.type == "danger" %}
+                        🚨
+                    {% elif alert.type == "warning" %}
+                        ⚠️
+                    {% elif alert.type == "success" %}
+                        ✅
+                    {% else %}
+                        🔔
+                    {% endif %}
+
+                </div>
+
+                <div>
+
+                    <h5 class="alert-heading mb-1">
+                        {{ alert.title }}
+                    </h5>
+
+                    <p class="mb-0">
+                        {{ alert.message }}
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="alert alert-info">
+            <h5>No Notifications</h5>
+            <p class="mb-0">
+                You currently have no financial alerts.
+            </p>
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

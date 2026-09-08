@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Budget Recommendations{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4 text-center">
+        Personalized Budget Recommendations
+    </h2>
+
+    {% if recommendations %}
+
+    <div class="row">
+
+        {% for category, data in recommendations.items() %}
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card shadow h-100">
+
+                <div class="card-body">
+
+                    <h4 class="card-title">
+                        {{ category }}
+                    </h4>
+
+                    <hr>
+
+                    <p>
+                        <strong>Average Spending:</strong>
+                        ₹{{ "%.2f"|format(data.average) }}
+                    </p>
+
+                    <p class="text-success">
+                        <strong>Recommended Budget:</strong>
+                        ₹{{ "%.2f"|format(data.recommended) }}
+                    </p>
+
+                    <p class="text-muted">
+                        Recommended budget is based on your
+                        previous spending.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <div class="alert alert-warning text-center">
+
+        <h5>No Expense Data Available</h5>
+
+        <p>
+            Please add some expenses to generate
+            personalized budget recommendations.
+        </p>
+
+        <a href="{{ url_for('add_expense') }}"
+           class="btn btn-primary">
+            Add Expense
+        </a>
+
+    </div>
+
+    {% endif %}
+
+    <div class="text-center mt-3">
+
+        <a href="{{ url_for('main.dashboard') }}"
+           class="btn btn-secondary">
+            Back to Dashboard
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

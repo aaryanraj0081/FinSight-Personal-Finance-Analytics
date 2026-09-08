@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Categories · FinSight{% endblock %}
+{% block content %}
+<div class="container wide">
+    <div class="card">
+        <h1>Expense Categories</h1>
+        <p style="color:#6b7c73; font-size:0.9rem;">Defaults are created for you automatically — add custom ones here.</p>
+
+        <form method="POST" class="filter-row" novalidate>
+            {{ form.hidden_tag() }}
+            <div class="field">
+                {{ form.name.label }}
+                {{ form.name() }}
+                {% for error in form.name.errors %}<div class="errors">{{ error }}</div>{% endfor %}
+            </div>
+            {{ form.submit() }}
+        </form>
+
+        <table>
+            <thead>
+                <tr><th>Name</th><th>Type</th><th></th></tr>
+            </thead>
+            <tbody>
+                {% for c in categories %}
+                <tr>
+                    <td>{{ c.name }}</td>
+                    <td>{{ "Default" if c.is_default else "Custom" }}</td>
+                    <td class="row-actions">
+                        <form class="inline-form" method="POST" action="{{ url_for('expenses.delete_category', category_id=c.id) }}"
+                              onsubmit="return confirm('Delete this category?');">
+                            <button type="submit" class="btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr><td colspan="3" class="empty-state">No categories yet.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

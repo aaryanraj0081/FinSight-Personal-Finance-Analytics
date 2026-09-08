@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">
+        Create Financial Goal
+    </h2>
+
+    <div class="card shadow-sm">
+
+        <div class="card-body">
+
+            <form method="POST">
+
+                <!-- Goal Name -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Goal Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="goal_name"
+                        class="form-control"
+                        placeholder="Example: Buy Laptop"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Target Amount -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Target Amount
+                    </label>
+
+                    <input
+                        type="number"
+                        name="target_amount"
+                        class="form-control"
+                        step="0.01"
+                        min="0"
+                        placeholder="Example: 80000"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Current Amount -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Current Amount
+                    </label>
+
+                    <input
+                        type="number"
+                        name="current_amount"
+                        class="form-control"
+                        step="0.01"
+                        min="0"
+                        value="0"
+                        placeholder="Example: 20000"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Target Date -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Target Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="target_date"
+                        class="form-control"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Buttons -->
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+                    Create Goal
+                </button>
+                <a
+                    href="{{ url_for('main.dashboard') }}"
+                    class="btn btn-secondary"
+                >
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

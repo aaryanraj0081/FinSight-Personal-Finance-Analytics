@@ -1,0 +1,353 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <!-- Page Heading -->
+    <div class="mb-4">
+        <h2 class="fw-bold">🎯 Financial Goal Planning</h2>
+        <p class="text-muted">
+            Create, track and achieve your financial goals.
+        </p>
+    </div>
+<!-- Goal Summary Cards -->
+{% set total_goals = goals|length %}
+{% set total_target = namespace(value=0) %}
+{% set completed_goals = namespace(value=0) %}
+
+{% for goal in goals %}
+    {% set total_target.value = total_target.value + goal.target_amount %}
+
+    {% if goal.target_amount > 0 and goal.current_amount >= goal.target_amount %}
+        {% set completed_goals.value = completed_goals.value + 1 %}
+    {% endif %}
+{% endfor %}
+
+<div class="row mb-4">
+
+    <!-- Total Goals -->
+    <div class="col-md-4 mb-3">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="text-muted mb-1">Total Goals</p>
+                        <h3 class="fw-bold mb-0">
+                            {{ total_goals }}
+                        </h3>
+                    </div>
+
+                    <div style="font-size: 40px;">
+                        🎯
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Total Target -->
+    <div class="col-md-4 mb-3">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="text-muted mb-1">Total Target</p>
+                        <h3 class="fw-bold mb-0">
+                            ₹{{ "%.2f"|format(total_target.value) }}
+                        </h3>
+                    </div>
+
+                    <div style="font-size: 40px;">
+                        💰
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Completed Goals -->
+    <div class="col-md-4 mb-3">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="text-muted mb-1">Completed Goals</p>
+                        <h3 class="fw-bold mb-0">
+                            {{ completed_goals.value }}
+                        </h3>
+                    </div>
+
+                    <div style="font-size: 40px;">
+                        ✅
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+    <!-- Create Goal Card -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">➕ Create New Financial Goal</h5>
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST" action="{{ url_for('add_goal') }}">
+
+                <div class="row">
+
+                    <!-- Goal Name -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Goal Name</label>
+                        <input
+                            type="text"
+                            name="goal_name"
+                            class="form-control"
+                            placeholder="Example: Buy a Laptop"
+                            required
+                        >
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <!-- Target Amount -->
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label fw-bold">
+                            Target Amount (₹)
+                        </label>
+
+                        <input
+                            type="number"
+                            name="target_amount"
+                            class="form-control"
+                            placeholder="80000"
+                            min="0"
+                            step="0.01"
+                            required
+                        >
+                    </div>
+
+                    <!-- Current Amount -->
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label fw-bold">
+                            Current Amount (₹)
+                        </label>
+
+                        <input
+                            type="number"
+                            name="current_amount"
+                            class="form-control"
+                            placeholder="30000"
+                            min="0"
+                            step="0.01"
+                            value="0"
+                        >
+                    </div>
+
+                    <!-- Target Date -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">
+                            Target Date
+                        </label>
+
+                        <input
+                            type="date"
+                            name="target_date"
+                            class="form-control"
+                            required
+                        >
+                    </div>
+
+                </div>
+
+                <!-- Create Button -->
+                <button type="submit" class="btn btn-primary">
+                    🎯 Create Goal
+                </button>
+
+            </form>
+
+        </div>
+    </div>
+
+
+    <!-- Your Goals -->
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-light">
+            <h5 class="mb-0">🎯 Your Goals</h5>
+        </div>
+
+        <div class="card-body">
+
+            {% if goals %}
+
+            <div class="row">
+
+                {% for goal in goals %}
+
+                <div class="col-md-6 col-lg-4 mb-4">
+
+                    <div class="card h-100 shadow-sm">
+
+                        <div class="card-body">
+
+                            <!-- Goal Title -->
+                            <h5 class="fw-bold mb-3">
+                                🎯 {{ goal.goal_name }}
+                            </h5>
+
+                            <!-- Target Amount -->
+                            <p class="mb-2">
+                                <strong>Target:</strong>
+                                ₹{{ "%.2f"|format(goal.target_amount) }}
+                            </p>
+
+                            <!-- Current Amount -->
+                            <p class="mb-2">
+                                <strong>Current:</strong>
+                                ₹{{ "%.2f"|format(goal.current_amount) }}
+                            </p>
+
+
+                            <!-- Progress -->
+                            {% if goal.target_amount and goal.target_amount > 0 %}
+
+                                {% set progress =
+                                    (goal.current_amount / goal.target_amount * 100)
+                                %}
+
+                                {% if progress > 100 %}
+                                    {% set progress = 100 %}
+                                {% endif %}
+
+                                {% if progress < 0 %}
+                                    {% set progress = 0 %}
+                                {% endif %}
+
+                                <div class="d-flex justify-content-between mb-1">
+                                    <small class="fw-bold">
+                                        Progress
+                                    </small>
+
+                                    <small class="fw-bold">
+                                        {{ "%.1f"|format(progress) }}%
+                                    </small>
+                                </div>
+
+                                <div
+                                    class="progress mb-3"
+                                    style="height: 20px;"
+                                >
+                                    <div
+                                        class="progress-bar bg-success"
+                                        role="progressbar"
+                                        style="width: {{ progress }}%;"
+                                        aria-valuenow="{{ progress }}"
+                                        aria-valuemin="0"
+                                        aria-valuemax="100"
+                                    >
+                                        {{ "%.1f"|format(progress) }}%
+                                    </div>
+                                </div>
+
+                                <!-- Remaining Amount -->
+                                {% set remaining =
+                                    goal.target_amount - goal.current_amount
+                                %}
+
+                                {% if remaining < 0 %}
+                                    {% set remaining = 0 %}
+                                {% endif %}
+
+                                <p class="mb-2">
+                                    <strong>Remaining:</strong>
+                                    ₹{{ "%.2f"|format(remaining) }}
+                                </p>
+
+                            {% else %}
+
+                                <p class="text-muted">
+                                    No target amount available.
+                                </p>
+
+                            {% endif %}
+
+
+                            <!-- Dates -->
+                            {% if goal.target_date %}
+                            <p class="mb-3">
+                                <strong>Target Date:</strong>
+                                {{ goal.target_date }}
+                            </p>
+                            {% endif %}
+
+                            <hr>
+
+                            <!-- Status -->
+                            {% if goal.target_amount > 0 and
+                                  goal.current_amount >= goal.target_amount %}
+
+                                <span class="badge bg-success">
+                                    ✅ Goal Completed
+                                </span>
+
+                            {% elif goal.current_amount > 0 %}
+
+                                <span class="badge bg-warning text-dark">
+                                    📈 In Progress
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge bg-secondary">
+                                    🆕 Not Started
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            {% else %}
+
+                <!-- No Goals -->
+                <div class="text-center py-5">
+
+                    <div style="font-size: 50px;">
+                        🎯
+                    </div>
+
+                    <h5 class="mt-3">
+                        No goals created yet.
+                    </h5>
+
+                    <p class="text-muted">
+                        Create your first financial goal above.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

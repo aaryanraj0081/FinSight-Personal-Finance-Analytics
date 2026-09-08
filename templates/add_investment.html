@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2>Add Investment</h2>
+
+    <form method="POST">
+
+        <!-- Asset Name -->
+        <div class="mb-3">
+            <label class="form-label">
+                Asset Name
+            </label>
+
+            <input
+                type="text"
+                name="asset_name"
+                class="form-control"
+                placeholder="Example: Reliance"
+                required
+            >
+        </div>
+
+
+        <!-- Asset Type -->
+        <div class="mb-3">
+
+            <label class="form-label">
+                Asset Type
+            </label>
+
+            <select
+                name="asset_type"
+                class="form-control"
+                required
+            >
+
+                <option value="">
+                    Select Asset Type
+                </option>
+
+                <option value="Stocks">
+                    Stocks
+                </option>
+
+                <option value="Mutual Funds">
+                    Mutual Funds
+                </option>
+
+                <option value="Gold">
+                    Gold
+                </option>
+
+                <option value="Bonds">
+                    Bonds
+                </option>
+
+                <option value="Crypto">
+                    Crypto
+                </option>
+
+                <option value="Other">
+                    Other
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- Quantity -->
+        <div class="mb-3">
+
+            <label class="form-label">
+                Quantity
+            </label>
+
+            <input
+                type="number"
+                name="quantity"
+                class="form-control"
+                step="0.01"
+                min="0"
+                placeholder="Example: 10"
+                required
+            >
+
+        </div>
+
+
+        <!-- Purchase Price -->
+        <div class="mb-3">
+
+            <label class="form-label">
+                Purchase Price
+            </label>
+
+            <input
+                type="number"
+                name="purchase_price"
+                class="form-control"
+                step="0.01"
+                min="0"
+                placeholder="Example: 2000"
+                required
+            >
+
+        </div>
+
+
+        <!-- Current Price -->
+        <div class="mb-3">
+
+            <label class="form-label">
+                Current Price
+            </label>
+
+            <input
+                type="number"
+                name="current_price"
+                class="form-control"
+                step="0.01"
+                min="0"
+                placeholder="Example: 2300"
+                required
+            >
+
+        </div>
+
+
+        <!-- Purchase Date -->
+        <div class="mb-3">
+
+            <label class="form-label">
+                Purchase Date
+            </label>
+
+            <input
+                type="date"
+                name="purchase_date"
+                class="form-control"
+                required
+            >
+
+        </div>
+
+
+        <!-- Buttons -->
+
+        <button
+            type="submit"
+            class="btn btn-primary"
+        >
+            Add Investment
+        </button>
+
+        <a
+            href="{{ url_for('main.dashboard') }}"
+            class="btn btn-secondary"
+        >
+            Cancel
+        </a>
+
+    </form>
+
+</div>
+
+{% endblock %}

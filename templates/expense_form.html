@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} · FinSight{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="card">
+        <h1>{{ title }}</h1>
+        <form method="POST" novalidate>
+            {{ form.hidden_tag() }}
+
+            <label for="amount">{{ form.amount.label.text }}</label>
+            {{ form.amount(id="amount") }}
+            {% for error in form.amount.errors %}<div class="errors">{{ error }}</div>{% endfor %}
+
+            <label for="category_id">{{ form.category_id.label.text }}</label>
+            {{ form.category_id(id="category_id") }}
+
+            <label for="expense_date">{{ form.expense_date.label.text }}</label>
+            {{ form.expense_date(id="expense_date") }}
+            {% for error in form.expense_date.errors %}<div class="errors">{{ error }}</div>{% endfor %}
+
+            <label for="payment_method">{{ form.payment_method.label.text }}</label>
+            {{ form.payment_method(id="payment_method") }}
+
+            <label for="note">{{ form.note.label.text }}</label>
+            {{ form.note(id="note", rows=3) }}
+            {% for error in form.note.errors %}<div class="errors">{{ error }}</div>{% endfor %}
+
+            {{ form.submit() }}
+        </form>
+        <p style="margin-top:18px;">
+            <a class="muted-link" href="{{ url_for('expenses.list_expenses') }}">← Back to expenses</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

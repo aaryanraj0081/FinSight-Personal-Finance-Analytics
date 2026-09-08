@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2>✏️ Edit Financial Goal</h2>
+
+    <div class="card shadow-sm mt-4">
+
+        <div class="card-body">
+
+            <form method="POST">
+
+                <!-- Goal Name -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Goal Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="goal_name"
+                        class="form-control"
+                        value="{{ goal.goal_name }}"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Target Amount -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Target Amount
+                    </label>
+
+                    <input
+                        type="number"
+                        name="target_amount"
+                        class="form-control"
+                        value="{{ goal.target_amount }}"
+                        step="0.01"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Current Amount -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Current Amount
+                    </label>
+
+                    <input
+                        type="number"
+                        name="current_amount"
+                        class="form-control"
+                        value="{{ goal.current_amount }}"
+                        step="0.01"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Target Date -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Target Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="target_date"
+                        class="form-control"
+                        value="{{ goal.target_date }}"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="btn btn-success"
+                >
+                    Save Changes
+                </button>
+
+
+                <a
+                    href="{{ url_for('goals') }}"
+                    class="btn btn-secondary"
+                >
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

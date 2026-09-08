@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="health-page">
+
+    <div class="health-heading">
+        <p class="eyebrow">Your financial wellbeing</p>
+        <h1>Financial Health</h1>
+    </div>
+
+    <div class="health-score-card text-center mb-4">
+        <h3>Financial Health Score</h3>
+
+        <h1 class="display-1 fw-bold">
+            {{ health_score }}/100
+        </h1>
+
+        <h3 class="health-status">{{ health_status }}</h3>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-6 mb-3">
+            <div class="health-metric">
+                <h5>Total Budget</h5>
+                <h3>₹{{ "%.2f"|format(total_budget) }}</h3>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <div class="health-metric">
+                <h5>Total Expenses</h5>
+                <h3>₹{{ "%.2f"|format(total_expenses) }}</h3>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <div class="health-metric">
+                <h5>Savings</h5>
+                <h3>₹{{ "%.2f"|format(savings) }}</h3>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <div class="health-metric">
+                <h5>Goal Progress</h5>
+                <h3>{{ "%.1f"|format(goal_progress) }}%</h3>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="health-breakdown mt-3">
+
+        <h4>Score Breakdown</h4>
+
+        <p>
+            Budget Adherence:
+            <strong>{{ expense_score }}/30</strong>
+        </p>
+
+        <p>
+            Savings Rate:
+            <strong>{{ savings_score }}/40</strong>
+        </p>
+
+        <p>
+            Financial Goals:
+            <strong>{{ goal_score }}/30</strong>
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}

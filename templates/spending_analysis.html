@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}Spending Analysis{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+<div class="card shadow mb-4">
+<div class="card-header bg-success text-white">
+<h3>Spending Pattern Analysis</h3>
+</div>
+
+<div class="card-body">
+
+{% if not has_data %}
+
+<p>No expenses yet. Add some expenses to see your spending patterns.</p>
+
+{% else %}
+
+<div class="row mb-4">
+
+<div class="col-md-4">
+<div class="card text-center p-3">
+<h6>Total Spent</h6>
+<h4>₹{{ total_spent }}</h4>
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="card text-center p-3">
+<h6>Top Category</h6>
+<h4>{{ top_category }}</h4>
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="card text-center p-3">
+<h6>Avg per Transaction</h6>
+<h4>₹{{ average_expense }}</h4>
+</div>
+</div>
+
+</div>
+
+{% if trend_direction %}
+<div class="alert {% if trend_direction == 'up' %}alert-danger{% else %}alert-success{% endif %}">
+Spending is <strong>{{ trend_direction }}</strong> {{ trend_percentage }}% compared to last month.
+</div>
+{% endif %}
+
+<h5 class="mt-4">Category Breakdown</h5>
+<table class="table table-bordered">
+<thead>
+<tr>
+<th>Category</th>
+<th>Amount</th>
+<th>% of Total</th>
+</tr>
+</thead>
+<tbody>
+{% for cat, amt in category_totals.items() %}
+<tr>
+<td>{{ cat }}</td>
+<td>₹{{ amt }}</td>
+<td>{{ category_percentage[cat] | round(1) }}%</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+<h5 class="mt-4">Monthly Spending</h5>
+<table class="table table-bordered">
+<thead>
+<tr>
+<th>Month</th>
+<th>Amount</th>
+</tr>
+</thead>
+<tbody>
+{% for month in sorted_months %}
+<tr>
+<td>{{ month }}</td>
+<td>₹{{ monthly_totals[month] }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+{% if top_weekday %}
+<div class="alert alert-info mt-4">
+You tend to spend the most on <strong>{{ top_weekday }}s</strong>.
+</div>
+{% endif %}
+
+<div class="alert alert-warning">
+Highest single expense: <strong>{{ highest_expense.title }}</strong>
+(₹{{ highest_expense.amount }}) on {{ highest_expense.date }}.
+</div>
+
+{% endif %}
+
+</div>
+</div>
+
+</div>
+
+{% endblock %}

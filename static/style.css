@@ -1,0 +1,365 @@
+:root {
+    --ink: #202124;
+    --muted: #6c757d;
+    --surface: #ffffff;
+    --page: #f4f6f9;
+    --primary: #764ba2;
+    --primary-dark: #59347d;
+    --accent: #667eea;
+    --border: #e4e7ec;
+}
+
+body {
+    background-color: var(--page);
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    padding-left: 250px;
+    transition: padding-left 0.25s ease;
+}
+
+.sidebar-toggle {
+    position: fixed;
+    top: 16px;
+    left: 262px;
+    z-index: 1100;
+    display: grid;
+    width: 36px;
+    height: 36px;
+    gap: 4px;
+    place-content: center;
+    border: 1px solid #495057;
+    border-radius: 7px;
+    background: #212529;
+    cursor: pointer;
+    transition: left 0.25s ease, background-color 0.2s ease;
+}
+
+.sidebar-toggle:hover {
+    background: #343a40;
+}
+
+.sidebar-toggle span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: #ffffff;
+}
+
+.app-sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 1000;
+    display: flex;
+    width: 250px;
+    flex-direction: column;
+    padding: 28px 16px 20px;
+    background: #212529;
+    box-shadow: 4px 0 18px rgba(0, 0, 0, 0.12);
+    transition: transform 0.25s ease;
+}
+
+.sidebar-collapsed {
+    padding-left: 0;
+}
+
+.sidebar-collapsed .app-sidebar {
+    transform: translateX(-100%);
+}
+
+.sidebar-collapsed .sidebar-toggle {
+    left: 16px;
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 12px 34px;
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.brand-mark {
+    display: grid;
+    width: 32px;
+    height: 32px;
+    place-items: center;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #ffffff;
+}
+
+.sidebar-nav {
+    display: grid;
+    gap: 6px;
+}
+
+.sidebar-nav a,
+.sidebar-logout {
+    padding: 11px 13px;
+    border-radius: 7px;
+    color: #ced4da;
+    font-size: 14px;
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.sidebar-nav a:hover,
+.sidebar-nav a:focus,
+.sidebar-logout:hover,
+.sidebar-logout:focus {
+    background: #343a40;
+    color: #ffffff;
+}
+
+.sidebar-nav a.active {
+    background: linear-gradient(135deg, var(--accent), var(--primary));
+    color: #ffffff;
+}
+
+.sidebar-nav .nav-info {
+    color: #70d7f5;
+}
+
+.sidebar-logout {
+    margin-top: auto;
+    color: #ffc107;
+}
+
+h2 {
+    font-weight: bold;
+    color: var(--ink);
+}
+
+.card {
+    border: none;
+    border-radius: 12px;
+    background: var(--surface);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.shadow {
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.15) !important;
+}
+
+.card-header {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.card-header.bg-primary,
+.card-header.bg-success,
+.card-header.bg-info {
+    background: linear-gradient(135deg, var(--accent), var(--primary)) !important;
+}
+
+.btn-primary,
+.btn-success {
+    border-color: var(--primary);
+    background: linear-gradient(135deg, var(--accent), var(--primary));
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-success:hover,
+.btn-success:focus {
+    border-color: var(--primary-dark);
+    background: linear-gradient(135deg, #5b70d4, var(--primary-dark));
+}
+
+.text-bg-primary,
+.text-bg-success {
+    background: linear-gradient(135deg, var(--accent), var(--primary)) !important;
+}
+
+.text-bg-danger {
+    background: linear-gradient(135deg, #e76f51, #b23a48) !important;
+}
+
+.form-control,
+.form-select {
+    border-color: var(--border);
+    border-radius: 8px;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.14);
+}
+
+.table {
+    --bs-table-bg: var(--surface);
+    --bs-table-border-color: var(--border);
+}
+
+.table thead th {
+    background: #f7f8fb;
+    color: #374151;
+}
+
+.navbar-brand {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.btn {
+    border-radius: 8px;
+}
+
+table {
+    background: white;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+}
+
+canvas {
+    max-width: 100%;
+}
+
+.health-page {
+    max-width: 1000px;
+}
+
+.health-heading {
+    margin-bottom: 24px;
+}
+
+.health-heading h1 {
+    margin: 0;
+    color: #212529;
+    font-weight: 700;
+}
+
+.health-score-card {
+    padding: 34px 24px;
+    border: 0;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #ffffff;
+}
+
+.health-score-card h3 {
+    font-size: 18px;
+}
+
+.health-score-card .display-1 {
+    margin: 12px 0;
+    font-size: clamp(3.5rem, 8vw, 5.5rem);
+}
+
+.health-status {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+    font-size: 16px;
+}
+
+.health-metric {
+    height: 100%;
+    padding: 22px;
+    border: 1px solid #e4e7ec;
+    border-radius: 10px;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+}
+
+.health-metric h5 {
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.health-metric h3 {
+    margin: 8px 0 0;
+    color: #764ba2;
+}
+
+.health-breakdown {
+    padding: 24px;
+    border: 1px solid #e4e7ec;
+    border-radius: 10px;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+}
+
+.health-breakdown h4 {
+    margin-bottom: 18px;
+    color: #212529;
+}
+
+.health-breakdown p {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #edf0f4;
+}
+
+.health-breakdown p:last-child {
+    margin-bottom: 0;
+    border-bottom: 0;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-left: 0;
+        padding-top: 82px;
+    }
+
+    .sidebar-toggle {
+        top: 14px;
+        left: 16px;
+    }
+
+    .app-sidebar {
+        width: 100%;
+        height: auto;
+        padding: 12px 16px;
+    }
+
+    .sidebar-collapsed {
+        padding-top: 0;
+    }
+
+    .sidebar-collapsed .app-sidebar {
+        transform: translateY(-100%);
+    }
+
+    .sidebar-brand {
+        margin: 0 0 10px;
+        padding-left: 48px;
+        font-size: 21px;
+    }
+
+    .sidebar-nav {
+        display: flex;
+        gap: 4px;
+        overflow-x: auto;
+        padding-bottom: 3px;
+    }
+
+    .sidebar-nav a,
+    .sidebar-logout {
+        flex: 0 0 auto;
+        padding: 7px 9px;
+        font-size: 12px;
+    }
+
+    .sidebar-logout {
+        display: none;
+    }
+}

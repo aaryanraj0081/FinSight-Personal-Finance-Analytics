@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">Financial Dashboard</h2>
+
+    <!-- Summary Cards -->
+    <div class="row">
+
+        <div class="col-md-4">
+            <div class="card text-bg-primary mb-3 shadow">
+                <div class="card-body">
+                    <h5>Total Budget</h5>
+                    <h3>₹{{ total_budget }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-bg-danger mb-3 shadow">
+                <div class="card-body">
+                    <h5>Total Expenses</h5>
+                    <h3>₹{{ total_expenses }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-bg-success mb-3 shadow">
+                <div class="card-body">
+                    <h5>Remaining Balance</h5>
+                    <h3>₹{{ remaining_balance }}</h3>
+                </div>
+            </div>
+        </div>
+
+    </div>
+<!-- Reports -->
+<div class="row mt-4">
+
+    <div class="col-md-12 text-center d-flex justify-content-center gap-2">
+
+        <a href="{{ url_for('download_excel') }}"
+           class="btn btn-success">
+            📊 Download Excel Report
+        </a>
+
+        <a href="{{ url_for('pdf_report') }}"
+           class="btn btn-danger">
+            📄 Download PDF Report
+        </a>
+
+    </div>
+
+</div>
+    <!-- Budget Recommendation -->
+    <div class="row mt-4">
+
+        <div class="col-md-12">
+            <div class="card shadow">
+
+                <div class="card-body text-center">
+
+                    <h5 class="card-title">
+                        Personalized Budget Recommendation
+                    </h5>
+
+                    <p class="card-text">
+                        Get personalized budget recommendations
+                        based on your spending history.
+                    </p>
+
+                    <a href="{{ url_for('budget_recommendation') }}"
+                       class="btn btn-primary">
+                        View Budget Recommendations
+                    </a>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Charts -->
+    <div class="row mt-4">
+
+        <div class="col-md-6">
+            <div class="card shadow">
+
+                <div class="card-header">
+                    Expense Categories
+                </div>
+
+                <div class="card-body">
+                    <canvas id="pieChart"></canvas>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow">
+
+                <div class="card-header">
+                    Monthly Expenses
+                </div>
+
+                <div class="card-body">
+                    <canvas id="barChart"></canvas>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Recent Transactions -->
+    <div class="card shadow mt-4">
+
+        <div class="card-header">
+            Recent Transactions
+        </div>
+
+        <div class="card-body">
+
+            <table class="table">
+
+                <tr>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                </tr>
+
+                {% for expense in recent_expenses %}
+
+                <tr>
+
+                    <td>{{ expense.title }}</td>
+
+                    <td>{{ expense.category }}</td>
+
+                    <td>₹{{ expense.amount }}</td>
+
+                    <td>{{ expense.date }}</td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+new Chart(document.getElementById("pieChart"), {
+
+    type: "pie",
+
+    data: {
+
+        labels: {{ labels | tojson }},
+
+        datasets: [{
+
+            data: {{ values | tojson }}
+
+        }]
+
+    }
+
+});
+
+
+new Chart(document.getElementById("barChart"), {
+
+    type: "bar",
+
+    data: {
+
+        labels: {{ month_labels | tojson }},
+
+        datasets: [{
+
+            label: "Expenses",
+
+            data: {{ month_values | tojson }}
+
+        }]
+
+    }
+
+});
+
+</script>
+
+{% endblock %}
